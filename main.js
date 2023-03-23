@@ -30,16 +30,40 @@ function setup()
   // Modificar/completar
 }
 
+PonerMinaCasillero(5,5);
 
 function draw() {
   if (hizoClick == true)
   {
-    pintarCasillero(columnaPresionada, filaPresionada, COLOR_CASILLERO_SIN_MINA); //pinta el casillero clickeado. Modificar/completar
+    
+    if (mouseButton == LEFT)
 
+    {
+      if (TieneMinaCasillero(columnaPresionada, filaPresionada))
+     
+      { 
+        pintarCasillero(columnaPresionada, filaPresionada, COLOR_CASILLERO_CON_MINA)
+      perder();
 
+      }
+      else
+      {   
+      pintarCasillero(columnaPresionada, filaPresionada, COLOR_CASILLERO_SIN_MINA)
+    }
+     
+    (
+      else
+    )
+
+      {
+        //poner bandera
+      }
+
+      //pintar el casillero clickeado. Modificado/Completado
     
     hizoClick = false;  //Indico que ya "procesé" el click del usuario. NO modificar
   }
+
 }
 
 
@@ -50,7 +74,7 @@ function ganoElJuego()
 
 function ponerMinasTablero()
 {
-  // Modificar/completar
+ PonerMinaCasillero(2,2);
 }
 
 function mostrarMinas()
@@ -60,5 +84,5 @@ function mostrarMinas()
 
 function contarMinasAlrededor(columna, fila)
 {
-  return 9;   //Esto hace que SIEMPRE cuente 9 minas alrededor. Modificar/completar
+return 9;   //Esto hace que SIEMPRE cuente 9 minas alrededor. Modificar/completar
 }
