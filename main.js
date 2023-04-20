@@ -26,21 +26,14 @@ function setup()
   COLOR_CASILLERO_CON_MINA = color("#FF0000");
   COLOR_CASILLERO_SIN_MINA = color("#1CC932");
   COLOR_CASILLERO_MARCADO = color("#278EF2");
-  
-  // Modificar/completar
-  //NumeroAletorio= floor(random(0, 100));
-  for (let contador = 0 ; contador < CANTIDAD_MINAS; contador++)
+
+
   {
-    
-    var filamina =floor(random(0,10));
 
-
-    //PENDIENTE
-
-
-    ponerMinaCasillero(5,5);
+    ponerMinaCasillero(5,5); //pone una mina en la columna 4, fila 5
     console.log(casillerosSinDescubrir)
-    casillerosSinDescubrir = FILAS*COLUMNAS;
+    casillerosSinDescubrir = FILAS * COLUMNAS;
+    ponerMinasTablero();
   }
 }
 
@@ -48,10 +41,15 @@ function draw() {
 
   if (hizoClick == true)
   {
-    if (mouseButton == LEFT){
-      if (tieneMinaCasillero(columnaPresionada, filaPresionada)){
-      perder();
+    if (mouseButton == LEFT)
+    {
+       if (tieneMinaCasillero(columnaPresionada, filaPresionada)){
+         mostrarMinas();
+        pintarCasillero(columnaPresionada, filaPresionada, COLOR_CASILLERO_CON_MINA);
+        perder();
+        
       }
+        
         if (descubrirCasillero(columnaPresionada, filaPresionada)){
         pintarCasillero(columnaPresionada, filaPresionada, COLOR_CASILLERO_SIN_MINA); //pinta el casillero clickeado. Modificar/Completar
       }
@@ -76,20 +74,66 @@ function draw() {
 
 function ganoElJuego()
 {
-  return false;   //Esto hace que NUNCA gane el juego. Modificar/completar
+  console.log("Victory")
+  ganar();
+  return true;   
 }
 
+// Modificar/completar
+  //NumeroAletorio= floor(random(0, 100));
 function ponerMinasTablero()
 {
- PonerMinaCasillero(2,2);
+  for (let contador = 0; contador < CANTIDAD_MINAS; contador++)
+  {
+    var columnamina = floor(random(0, COLUMNAS));
+    var filamina = floor(random(0, FILAS));
+    if(tieneMinaCasillero(columnamina, filamina))
+    {
+      //esto se ejecuta si la columna 4, fila 5 tiene una mina
+      contador=contador-1
+    }
+    else
+    {
+      //esto se ejecuta si la columna 4, fila 5 NO tiene una mina
+      console.log(columnamina+" , "+filamina);
+      ponerMinaCasillero(columnamina,filamina);
+    }
+  }
 }
 
 function mostrarMinas()
 {
-  // Modificar/completar
+ 
+  for (var contC = 0; contC < COLUMNAS; contC++){
+    for (var contF = 0; contF < FILAS; contF++){
+      if (tieneMinaCasillero(contC, contF)){
+        pintarCasillero(contC, contF, COLOR_CASILLERO_CON_MINA);
+        
+      }
+    }
+  }
+  
 }
 
 function contarMinasAlrededor(columna, fila)
 {
   return 9;   //Esto hace que SIEMPRE cuente 9 minas alrededor. Modificar/completar
 }
+
+
+/*
+for i in range(1, 10):
+  accion
+
+for(var contador=0 ; contador < 50 ; contador++)
+{
+  acciones
+}
+
+for(inicializacion; condicion_mientras_que_se_cumple_lo_hace ; paso)
+{
+
+}
+
+
+*/
