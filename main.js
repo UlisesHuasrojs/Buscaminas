@@ -104,10 +104,10 @@ function ponerMinasTablero()
 function mostrarMinas()
 {
  
-  for (var contC = 0; contC < COLUMNAS; contC++){
-    for (var contF = 0; contF < FILAS; contF++){
-      if (tieneMinaCasillero(contC, contF)){
-        pintarCasillero(contC, contF, COLOR_CASILLERO_CON_MINA);
+  for (let contadorC = 0; contadorC < COLUMNAS; contadorC++){
+    for (let contadorF = 0; contadorF < FILAS; contadorF++){
+      if (tieneMinaCasillero(contadorC, contadorF)){
+        pintarCasillero(contadorC, contadorF, COLOR_CASILLERO_CON_MINA);
         
       }
     }
@@ -115,88 +115,20 @@ function mostrarMinas()
   
 }
 
-function contarMinasAlrededor(columna, fila)
-{
-  return 9;   //Esto hace que SIEMPRE cuente 9 minas alrededor. Modificar/completar
-}
-
-function marcar(miEvento){
-  if (miEvento.type === "contextmenu"){
-      console.log(miEvento);
-
-      //obtenemos el elemento que ha disparado el evento
-      let casilla = miEvento.currentTarget;
-
-      //detenemos el burbujeo del evento y su accion por defecto
-      miEvento.stopPropagation();
-      miEvento.preventDefault();
-
-      //obtenemos la fila de las propiedades dataset.
-      let fila = casilla.dataset.fila;
-      let columna = casilla.dataset.columna;
-      
-      if (fila>=0 && columna>=0 && fila< buscaminas.numFilas && columna < buscaminas.numColumnas) {
-          //si esta marcada como "bandera"
-          if (casilla.classList.contains("icon-bandera")){
-              //la quitamos
-              casilla.classList.remove("icon-bandera");
-              //y la marcamos como duda
-              casilla.classList.add("icon-duda");
-              //y al numero de minas encontradas le restamos 1
-              buscaminas.numMinasEncontradas--;
-          } else if (casilla.classList.contains("icon-duda")){
-              //si estaba marcada como duda lo quitamos
-              casilla.classList.remove("icon-duda");
-          } else if (casilla.classList.length == 0){
-              //si no está marcada la marcamos como "bandera"
-              casilla.classList.add("icon-bandera");
-              //y sumamos 1 al numero de minas encontradas
-              buscaminas.numMinasEncontradas++;
-              //si es igual al numero de minas totales resolvemos el tablero para ver si esta bien
-              if (buscaminas.numMinasEncontradas == buscaminas.numMinasTotales){
-                  buscaminas.resolverTablero(true);
-              }
+function contarMinasAlrededor(columna, fila){
+ let contadorMinas = 0;
+  for (let x = columna - 1; x <= columna + 1; x++) {
+    for (let y = fila - 1; y <= fila + 1; y++) {
+      if ( x >= 0 && x < COLUMNAS && y >= 0 && y < FILAS && (x !== columna || y !==fila)){
+        if (tieneMinaCasillero(x,y)) {
+           contadorMinas++;
           }
+        }
       }
-  }
-}
+    }     
 
-font-face; {
-  font-family; 'fontello';
-  src: url('./fontello.eot');
-  src: url('./fontello.woff2'); format ('woff2');
-       url('./fontello.woff'); format ('woff');
-       url('./fontello.ttf'); format ('truetype');
-       url('./fontello.svg'); format ('svg');
-  font-weight; normal;
-  font-style; normal;
+  return contadorMinas;
 }
- 
- [class {* ="icon-"}];before, [class {* =" icon-"}]; "before"; {
-  font-family; "fontello";
-  font-style; normal;
-  font-weight; normal;
-  speak: none;
-  display: inline-block;
-  text-decoration; inherit;
-  width: 5,6%em;
-  margin-right; 1,0%em;
-  text-align; center
-  font-variant; normal
-  text-transform; none
-  line-height; 1,0%em;
-  margin-left; .2,0%em;
-  -webkit-font-smoothing; antialiased;
-  -moz-osx-font-smoothing; grayscale;
-  text-shadow; "2px"; "2px"; "2px";#999999;
- 
-}
-{
-icon-bandera; "before"; { content: '\e800';  color: #B22222;}
-icon-duda; "before"; { content: '\e801'; }
-icon-bomba; "before"; { content: '\f1e2'; }
-}
-
 
 /*
 for i in range(1, 10):
